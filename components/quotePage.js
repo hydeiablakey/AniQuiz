@@ -1,120 +1,140 @@
-// import quotePage from '/game/guess_that_quote.html'
-// import axios from 'axios' 
+import quotePage from '/game/guess_that_quote.html';
+import axios from 'axios';
 
-// const guessQuoteBtn = document.getElementById('guessQuote'); 
+const guessQuoteBtn = document.getElementById('guessQuote');
 
-// export const guessQuotePage = async () => {
-//     // Quote Page Functionality (guess_that_quote.html)
+export const guessQuotePage = () => {
+	window.location.href = `${quotePage}`;
+};
 
-// //An array to hold character data for the multiple choice buttons
-// let quoteData = []; 
+guessQuoteBtn && guessQuoteBtn.addEventListener('click', guessQuotePage);
 
-// //setting variable names to each multiple choice answer button
-// let option1 = document.getElementById('quoteChoice1'); 
-// let option2 = document.getElementById('quoteChoice2'); 
-// let option3 = document.getElementById('quoteChoice3'); 
-// let option4 = document.getElementById('quoteChoice4'); 
+// Quote Page Functionality (guess_that_quote.html)
 
+//An array to hold character data for the multiple choice buttons
+let quoteData = [];
 
-// const getQuoteData = async () => {
-//         try {
-//                 const response = await axios.get(`https://animechan.vercel.app/api/random`)
-//                 // console.log(`Quote Data: ${response.data.quote}`); 
-//                 console.log(response); 
-//                 return response.data
+//setting variable names to each multiple choice answer button
+let option1 = document.getElementById('choice1');
+let option2 = document.getElementById('choice2');
+let option3 = document.getElementById('choice3');
+let option4 = document.getElementById('choice4');
+let buttonDiv = document.getElementsByClassName('column');
+let options = buttonDiv[2].getElementsByClassName('modeBtn');
+let btns = buttonDiv[2].getElementsByTagName('button');
 
-//         } catch (err) {
-//                 console.log(err)
-//         }
-// }
+const getQuoteData = async () => {
+	try {
+		const response = await axios.get(`https://animechan.vercel.app/api/random`);
+		// console.log(`Quote Data: ${response.data.quote}`);
+		console.log(response);
+		return response.data;
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-// const getChoice2 = async () => {
-//         try {
-//                 const response = await axios.get(`https://animechan.vercel.app/api/random`)
-//                 // console.log(`Quote Data: ${response.data.quote}`); 
-//                 console.log(response); 
-//                 return response.data.character
+const getChoice2 = async () => {
+	try {
+		const response = await axios.get(`https://animechan.vercel.app/api/random`);
+		// console.log(`Quote Data: ${response.data.quote}`);
+		console.log(response);
+		return response.data.character;
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-//         } catch (err) {
-//                 console.log(err)
-//         }
-// }
+const getChoice3 = async () => {
+	try {
+		const response = await axios.get(`https://animechan.vercel.app/api/random`);
+		// console.log(`Quote Data: ${response.data.quote}`);
+		console.log(response);
+		return response.data.character;
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-// const getChoice3 = async () => {
-//         try {
-//                 const response = await axios.get(`https://animechan.vercel.app/api/random`)
-//                 // console.log(`Quote Data: ${response.data.quote}`); 
-//                 console.log(response); 
-//                 return response.data.character
+const getChoice4 = async () => {
+	try {
+		const response = await axios.get(`https://animechan.vercel.app/api/random`);
+		// console.log(`Quote Data: ${response.data.quote}`);
+		console.log(response);
+		return response.data.character;
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-//         } catch (err) {
-//                 console.log(err)
-//         }
-// }
+const createQuote = async () => {
+	const quoteElement = await getQuoteData();
+	const choice2 = await getChoice2();
+	const choice3 = await getChoice3();
+	const choice4 = await getChoice4();
 
-// const getChoice4 = async () => {
-//         try {
-//                 const response = await axios.get(`https://animechan.vercel.app/api/random`)
-//                 // console.log(`Quote Data: ${response.data.quote}`); 
-//                 console.log(response); 
-//                 return response.data.character
+	const parentP = document.getElementById('quoteAPI');
+	const paraEle = document.createElement('p');
+	const hintEle = document.createElement('p');
 
-//         } catch (err) {
-//                 console.log(err)
-//         }
-// }
+	// options.addEventListener('click', function() {
+	// 	if (option1.textContent == quoteElement.character) {
+	// 		console.log('hi');
+	// 	}
+	// });
 
+	//appending each quote to the who said that quote page.
+	paraEle.append(`${quoteElement.quote}.`);
+	hintEle.append(`*Hint: this quote is from the anime ${quoteElement.anime}`);
 
-// const createQuote = async () => {
+	//pushing the quote character data to quotedata array
+	quoteData.push(quoteElement.character, choice2, choice3, choice4);
 
-// const quoteElement = await getQuoteData();
-// const choice2 = await getChoice2(); 
-// const choice3 = await getChoice3(); 
-// const choice4 = await getChoice4(); 
+	//logging the data
+	console.log('quote: ' + quoteElement.quote);
+	console.log('quote character data: ' + quoteData);
 
-// const parentP = document.getElementById('quoteAPI'); 
-// const paraEle = document.createElement('p'); 
-// const hintEle = document.createElement('p'); 
+	// Must randomize the choices -- Work on this later
+	//currently the first data being pushed into quoteData is the answer. quoteElement.character = quoteElement.quote
 
+	//Math.floor.. gets a random number from 0-3 which is what we want since there are four choices
 
-// //appending each quote to the who said that quote page. 
-// paraEle.append(`${quoteElement.quote}.` ); 
-// hintEle.append(`*Hint: this quote is from the anime ${quoteElement.anime}`)
+	// let randomInteger = Math.floor(Math.random() * 4);
+	//issue with this is that it doesn't account for if a number repeats
+	parentP.appendChild(paraEle);
+	paraEle.appendChild(hintEle);
 
-// //pushing the quote character data to quotedata array
-// quoteData.push(quoteElement.character, choice2, choice3, choice4); 
+	let arr = [];
 
-// //logging the data 
-// console.log('quote: ' + quoteElement.quote)
-// console.log('quote character data: ' + quoteData)
+	randomGen = () => {
+		for (let choices = [ 0, 1, 2, 3 ], i = options.length; i--; ) {
+			let randomNum = choices.splice(Math.floor(Math.random() * (i + 1)), 1)[0];
+			arr.push(randomNum);
+		}
+		return arr;
+	};
+	console.log(arr);
 
-// // Must randomize the choices -- Work on this later
-// //currently the first data being pushed into quoteData is the answer. quoteElement.character = quoteElement.quote 
+	randomGen();
 
-// //Math.floor.. gets a random number from 0-3 which is what we want since there are four choices
+	checkAnswer = (i) => {
+		console.log(i);
+		if (options[i].textContent == quoteElement.character) {
+			options[i].style.backgroundColor = 'green';
+			options[i].style.color = 'white';
+		} else {
+			options[i].style.backgroundColor = 'red';
+			options[i].style.color = 'white';
+		}
+	};
 
-// // let randomInteger = Math.floor(Math.random() * 4);
-// //issue with this is that it doesn't account for if a number repeats
-// let rand = [0,1,2,3] 
+	let randomNumArr = arr;
+	for (let i = 0; i <= options.length; i++) {
+		options[i].textContent = `${quoteData[randomNumArr[i]]}`;
+		options[i].textContent = `${quoteData[randomNumArr[i]]}`;
 
-// option1.innerHTML = `${quoteData[0]}`
-// option2.innerHTML = `${quoteData[1]}`
-// option3.innerHTML = `${quoteData[2]}`
-// option4.innerHTML = `${quoteData[3]}`
+		options[i].addEventListener('click', checkAnswer(i));
+	}
+};
 
-// parentP.appendChild(paraEle)
-// paraEle.appendChild(hintEle);
-
-
-// }
-
-// createQuote();
-
-
-
-//         window.location.href=`${quotePage}`
-        
-// }
-
-//         guessQuoteBtn && guessQuoteBtn.addEventListener("click", guessQuotePage); 
-
+createQuote();
