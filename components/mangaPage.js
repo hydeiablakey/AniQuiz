@@ -9,18 +9,6 @@ export const guessMangaPage = () => {
 };
 guessMangaBtn && guessMangaBtn.addEventListener('click', guessMangaPage);
 
-// const getMangaImg = async () => {
-// try {
-//     const response = await axios.get(`https://api.jikan.moe/v3/manga/1/pictures`)
-//     console.log(response.data.pictures[0].large);
-//     console.log('help me');
-//     return response.data.pictures[0].large;
-//     // console.log('th')
-
-// } catch (err) {
-//     console.log(err)
-// }
-// }
 
 let buttonDiv = document.getElementsByClassName('column');
 let options = buttonDiv[2].getElementsByClassName('modeBtn');
