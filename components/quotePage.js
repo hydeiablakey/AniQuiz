@@ -3,23 +3,17 @@
 
 // const guessQuoteBtn = document.getElementById('guessQuote'); 
 
-// export const guessQuotePage = () => {
-//         window.location.href=`${quotePage}`
-        
-// }
-
-//         guessQuoteBtn && guessQuoteBtn.addEventListener("click", guessQuotePage); 
-
-// // Quote Page Functionality (guess_that_quote.html)
+// export const guessQuotePage = async () => {
+//     // Quote Page Functionality (guess_that_quote.html)
 
 // //An array to hold character data for the multiple choice buttons
 // let quoteData = []; 
 
 // //setting variable names to each multiple choice answer button
-// let option1 = document.getElementById('choice1'); 
-// let option2 = document.getElementById('choice2'); 
-// let option3 = document.getElementById('choice3'); 
-// let option4 = document.getElementById('choice4'); 
+// let option1 = document.getElementById('quoteChoice1'); 
+// let option2 = document.getElementById('quoteChoice2'); 
+// let option3 = document.getElementById('quoteChoice3'); 
+// let option4 = document.getElementById('quoteChoice4'); 
 
 
 // const getQuoteData = async () => {
@@ -116,4 +110,11 @@
 
 // createQuote();
 
+
+
+//         window.location.href=`${quotePage}`
+        
+// }
+
+//         guessQuoteBtn && guessQuoteBtn.addEventListener("click", guessQuotePage); 
 
