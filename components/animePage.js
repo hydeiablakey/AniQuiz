@@ -1,16 +1,15 @@
-import animePage from '/game/guess_that_anime.html'
-import axios from 'axios'
+import animePage from '/game/guess_that_anime.html';
+import axios from 'axios';
 
 const guessAnimeBtn = document.getElementById('guessAnime');
 
 export const guessAnimePage = () => {
-    // console.log("button was clicked");
+	// console.log("button was clicked");
 
-window.location.href=`${animePage}`;
-}
+	window.location.href = `${animePage}`;
+};
 
-
-guessAnimeBtn && guessAnimeBtn.addEventListener("click", guessAnimePage);
+guessAnimeBtn && guessAnimeBtn.addEventListener('click', guessAnimePage);
 
 let buttonDiv = document.getElementsByClassName('column');
 let options = buttonDiv[2].getElementsByClassName('modeBtn');
@@ -33,7 +32,6 @@ const getAnimeImg = async () => {
 		const response = await axios.get(`https://api.jikan.moe/v3/top/anime/1/tv`);
 		// console.log(response.data);
 		return response.data;
-
 	} catch (err) {
 		console.log(err);
 	}
@@ -41,27 +39,25 @@ const getAnimeImg = async () => {
 
 // getAnimeImg();
 
-
 const createAnimeGame = async () => {
 	const imgData = await getAnimeImg();
 
-
-    //appending the image on the page 
+	//appending the image on the page
 
 	const parentDiv = document.getElementById('animeColumn');
 	const animeImg = document.createElement('img');
 
-    //Anime response photo & answer from photo
+	//Anime response photo & answer from photo
 
 	console.log('ANIME response answer photo: ' + imgData.top[rand].image_url);
 	console.log('ANIME response answer title: ' + imgData.top[rand].title);
 
-    //Appending anime image into it's parentDiv
+	//Appending anime image into it's parentDiv
 
 	animeImg.src = `${imgData.top[rand].image_url}`;
 	parentDiv.appendChild(animeImg);
 
-	//anime button choice randomizer section 
+	//anime button choice randomizer section
 
 	let arr = [];
 

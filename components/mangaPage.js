@@ -9,7 +9,18 @@ export const guessMangaPage = () => {
 };
 guessMangaBtn && guessMangaBtn.addEventListener('click', guessMangaPage);
 
+// const getMangaImg = async () => {
+// try {
+//     const response = await axios.get(`https://api.jikan.moe/v3/manga/1/pictures`)
+//     console.log(response.data.pictures[0].large);
+//     console.log('help me');
+//     return response.data.pictures[0].large;
+//     // console.log('th')
 
+// } catch (err) {
+//     console.log(err)
+// }
+// }
 let buttonDiv = document.getElementsByClassName('column');
 let options = buttonDiv[2].getElementsByClassName('modeBtn');
 
@@ -36,63 +47,59 @@ const getMangaImg = async () => {
 	}
 };
 
-// const getMangaResponse2 = async () => {
-// 	try {
-// 		const response = await axios.get(`
-//         https://api.jikan.moe/v3/top/manga/1/manga`);
-// 		// console.log(response.data.top[rand].image_url)
-// 		return response.data.top[rand2].title;
-// 		// console.log('th')
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// };
+const getMangaResponse2 = async () => {
+	try {
+		const response = await axios.get(`
+        https://api.jikan.moe/v3/top/manga/1/manga`);
+		// console.log(response.data.top[rand].image_url)
+		return response.data.top[rand2].title;
+		// console.log('th')
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-// const getMangaResponse3 = async () => {
-// 	try {
-// 		const response = await axios.get(`
-//             https://api.jikan.moe/v3/top/manga/1/manga`);
-// 		// console.log(response.data.top[rand].image_url)
-// 		return response.data.top[rand3].title;
-// 		// console.log('th')
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// };
+const getMangaResponse3 = async () => {
+	try {
+		const response = await axios.get(`
+            https://api.jikan.moe/v3/top/manga/1/manga`);
+		// console.log(response.data.top[rand].image_url)
+		return response.data.top[rand3].title;
+		// console.log('th')
+	} catch (err) {
+		console.log(err);
+	}
+};
 
-// const getMangaResponse4 = async () => {
-// 	try {
-// 		const response = await axios.get(`
-//         https://api.jikan.moe/v3/top/manga/1/manga`);
-// 		// console.log(response.data.top[rand].image_url)
-// 		return response.data.top[rand4].title;
-// 		// console.log('th')
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// };
+const getMangaResponse4 = async () => {
+	try {
+		const response = await axios.get(`
+        https://api.jikan.moe/v3/top/manga/1/manga`);
+		// console.log(response.data.top[rand].image_url)
+		return response.data.top[rand4].title;
+		// console.log('th')
+	} catch (err) {
+		console.log(err);
+	}
+};
 
 // getMangaImg();
 
 const createMangaGame = async () => {
 	const imgData = await getMangaImg();
 
-	// const imgTitle2 = await getMangaResponse2();
-	// const imgTitle3 = await getMangaResponse3();
-	// const imgTitle4 = await getMangaResponse4();
-
-    //appending the image on the page 
+	const imgTitle2 = await getMangaResponse2();
+	const imgTitle3 = await getMangaResponse3();
+	const imgTitle4 = await getMangaResponse4();
 
 	const parentDiv = document.getElementById('mangaColumn');
 	const mangaImg = document.createElement('img');
-
 	console.log('response answer photo: ' + imgData.top[rand].image_url);
 	console.log('response answer title: ' + imgData.top[rand].title);
-
 	mangaImg.src = `${imgData.top[rand].image_url}`;
 	parentDiv.appendChild(mangaImg);
 
-	//manga button choice randomizer section 
+	//manga button choices
 
 	let arr = [];
 
