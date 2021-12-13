@@ -247,6 +247,11 @@ Start Game
 	border: 2px solid;
 }
 
+#mangaColumn img {
+	height: 40vh;
+	border: 2px solid;
+}
+
 .modeTitle {
 	margin-top: 100px;
 }
