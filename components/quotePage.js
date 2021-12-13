@@ -10,16 +10,22 @@ export const guessQuotePage = () => {
 
 guessQuoteBtn && guessQuoteBtn.addEventListener('click', guessQuotePage);
 
-let buttonDiv = document.getElementsByClassName('column');
-let options = buttonDiv[2].getElementsByClassName('modeBtn');
-
 const parentP = document.getElementById('quoteAPI');
 const paraEle = document.createElement('p');
 const hintEle = document.createElement('p');
 let menu = document.getElementById('quoteMainMenu');
 
+const clearQuote = () => {
+	while (parentP.firstChild) {
+		parentP.firstChild.remove();
+		// parentP.innerHTML = ""
+	}
+};
+
 if (parentP) {
-	parentP.appendChild(paraEle);
+	let buttonDiv = document.getElementsByClassName('column');
+	let options = buttonDiv[2].getElementsByClassName('modeBtn');
+
 	const getQuoteData = async () => {
 		try {
 			const response = await axios.get(`https://animechan.vercel.app/api/random`);
@@ -72,25 +78,36 @@ if (parentP) {
 
 	const createQuote = async () => {
 		if (parentP) {
+			let load = document.getElementById('loading');
+
 			let quoteData = [];
+
 			const quoteElement = await getQuoteData();
 			const choice2 = await getChoice2();
 			const choice3 = await getChoice3();
 			const choice4 = await getChoice4();
 
+			if (quoteData.length === 0) {
+				load.style.display = 'block';
+			}
+
+			load.style.display = 'none';
+
 			//appending each quote to the who said that quote page.
-			paraEle.append(`${quoteElement.quote}.`);
-			hintEle.append(`*Hint: this quote is from the anime ${quoteElement.anime}`);
+			paraEle.textContent = `${quoteElement.quote}.`;
+			hintEle.textContent = `*Hint: this quote is from the anime ${quoteElement.anime}`;
 
 			//pushing the quote character data to quotedata array
 			quoteData.push(quoteElement.character, choice2, choice3, choice4);
 
 			//logging the data
-			// console.log('quote: ' + quoteElement.quote);
+			console.log('quote: ' + quoteElement.quote);
 			console.log('character: ' + quoteElement.character);
 			// console.log('quote character data: ' + quoteData);
 
 			paraEle.appendChild(hintEle);
+			parentP.appendChild(paraEle);
+
 			let arr = [];
 
 			randomGen = () => {
@@ -135,10 +152,13 @@ if (parentP) {
 	createQuote();
 
 	let nextPageBtn = document.getElementsByClassName('nextQuestion');
-	console.log(nextPageBtn);
+
 	nextPageBtn[0].addEventListener('click', function() {
-		console.log('next click');
+		// console.log('next click');
+		// console.log('clear');
+		clearQuote();
 		createQuote();
+
 		for (let j = 0; j < options.length; j++) {
 			options[j].disabled = false;
 			options[j].style.backgroundColor = 'white';

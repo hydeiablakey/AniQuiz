@@ -10,30 +10,37 @@ export const guessAnimePage = () => {
 
 guessAnimeBtn && guessAnimeBtn.addEventListener('click', guessAnimePage);
 
-let buttonDiv = document.getElementsByClassName('column');
-let options = buttonDiv[2].getElementsByClassName('modeBtn');
-
 let rand1 = Math.floor(Math.random() * 50);
 let rand2 = Math.floor(Math.random() * 50);
 let rand3 = Math.floor(Math.random() * 50);
 let rand4 = Math.floor(Math.random() * 50);
+
+//this cycles through 25 pages of top anime tv shows.
+let randomizeAnime = Math.floor(Math.random() * 25);
+
 const animeParentDiv = document.getElementById('animeColumn');
 const animeImg = document.createElement('img');
+
 let storedData = [];
 let storedButtonOrder = [];
+
 let nextPageBtn = document.getElementsByClassName('nextQuestion');
-let exitModelBox = document.getElementsByClassName('model-box');
+
+let modelBox = document.getElementsByClassName('model-box');
 let modelText = document.getElementsByClassName('model-text');
 let modalBtn = document.getElementById('closeBt');
+
 let answer = document.getElementsByClassName('answer');
 let menu = document.getElementById('animeMainMenu');
 
 if (animeParentDiv) {
+	let buttonDiv = document.getElementsByClassName('column');
+	let options = buttonDiv[2].getElementsByClassName('modeBtn');
 	animeParentDiv.appendChild(animeImg);
 
 	const getAnimeImg = async () => {
 		try {
-			const response = await axios.get(`https://api.jikan.moe/v3/top/anime/1/tv`);
+			const response = await axios.get(`https://api.jikan.moe/v3/top/anime/${randomizeAnime}/tv`);
 			console.log(response);
 			return response.data;
 		} catch (err) {
@@ -42,7 +49,11 @@ if (animeParentDiv) {
 	};
 
 	modalBtn.addEventListener('click', function() {
-		exitModelBox[0].style.display = 'none';
+		modelBox[0].style.display = 'none';
+
+		//allows the page to continue scrolling when you exit the modal
+		document.body.style.position = '';
+		document.body.style.top = '';
 	});
 
 	const returnMenu = () => {
@@ -57,7 +68,9 @@ if (animeParentDiv) {
 			const imgData = await getAnimeImg();
 
 			let selected = imgData.top[rand1];
+
 			storedData.push(selected);
+
 			animeImg.src = selected.image_url;
 
 			//anime button choice randomizer section
@@ -74,8 +87,11 @@ if (animeParentDiv) {
 			randomGen();
 
 			let randomNumArr = arr;
+
 			storedButtonOrder.push(randomNumArr);
+
 			console.log(storedButtonOrder);
+
 			options[[ randomNumArr[0] ]].textContent = `${imgData.top[rand1].title}`;
 			options[[ randomNumArr[1] ]].textContent = `${imgData.top[rand2].title}`;
 			options[[ randomNumArr[2] ]].textContent = `${imgData.top[rand3].title}`;
@@ -83,22 +99,31 @@ if (animeParentDiv) {
 
 			for (let i = 0; i < options.length; i++) {
 				options[i].addEventListener('click', function() {
-					exitModelBox[0].style.display = 'flex';
+					modelBox[0].style.display = 'flex';
+
+					//stops the page from scrolling when the modal box appears
+					document.body.style.position = 'fixed';
+					document.body.style.top = `-${window.scrollY}px`;
+
 					if (options[i].textContent == imgData.top[rand1].title) {
 						modelText[0].textContent = `Congrats! You choose the correct answer. Your answer was:`;
 						answer[0].textContent = `${imgData.top[rand1].title}`;
+
 						answer[0].style.backgroundColor = 'green';
 						options[i].style.backgroundColor = 'green';
 						options[i].style.color = 'white';
+
 						for (let j = 0; j < options.length; j++) {
 							options[j].disabled = true;
 						}
 					} else {
 						modelText[0].textContent = `Sorry, You chose the wrong answer! The correct answer should have been:`;
 						answer[0].textContent = `${imgData.top[rand1].title}`;
+
 						answer[0].style.backgroundColor = 'red';
 						options[i].style.backgroundColor = 'red';
 						options[i].style.color = 'white';
+
 						for (let j = 0; j < options.length; j++) {
 							options[j].disabled = true;
 						}
@@ -114,7 +139,8 @@ if (animeParentDiv) {
 
 	let i = 1;
 	console.log(`Question ${i}`);
-	exitModelBox[0].style.display = 'none';
+	modelBox[0].style.display = 'none';
+
 	nextPageBtn[0].addEventListener('click', function() {
 		i += 1;
 		if (i < 11) {
@@ -131,6 +157,7 @@ if (animeParentDiv) {
 			}
 		} else {
 			console.log('stop game');
+			nextPageBtn[0].disabled = true;
 		}
 	});
 }
